@@ -242,3 +242,4 @@ contract NERInterface is Token{
     function transfer(address _to, uint256 _value) ;
 }
 ```
+### 感谢主办方提供的这次比赛机会！

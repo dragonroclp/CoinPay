@@ -212,3 +212,33 @@ contract yamiedie is CoinWare{
 ```
 - interfaces合约
 >>该合约实现了与其他已有合约的连接，使得在进行兑换时，可以实现连接币池和赌博方式随机返回资产这两种兑换方式。
+```
+interface Token{
+    function transfer(address _to,uint _value);
+}
+ 
+contract KittyInterface is Token{
+    function getKitty(uint256 _id)external view returns( 
+    bool isGestating,
+    bool isReady,
+    uint256 cooldownIndex,
+    uint256 nextActionAt,
+    uint256 siringWithId,
+    uint256 birthTime,
+    uint256 matronId,
+    uint256 sireId,
+    uint256 generation,
+    uint256 genes);
+    function transfer(address _to, uint256 _tokenId);
+    
+} 
+
+contract BMCInterface is Token{
+    function transfer(address _to, uint256 _value) public;
+    
+}
+
+contract NERInterface is Token{
+    function transfer(address _to, uint256 _value) ;
+}
+```

@@ -48,3 +48,66 @@ contract.methods.gambling(e1,e2).call()
             }).on('error',console.error)
 nervos.listeners.listenToTransactionReceipt().then(console.log)
     }
+```
+#### 智能合约
+##### 本组在Nervos提供的开发环境下，设计实现了5个智能合约，分别是coinware.sol、interfaces.sol、ownable.sol、safemath.sol、yamiedie.sol。
+- ownable合约
+>>该合约规定了当用户将自己拥有的数字资产存储在本平台在其他链的地址时，只有拥有这些资产的用户和平台拥有者可以将这些数字资产取出。
+```
+contract Ownable {
+  address public owner;
+  event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+  /**
+   * @dev The Ownable constructor sets the original `owner` of the contract to the sender
+   * account.
+   */
+  function Ownable() public {
+    owner = msg.sender;
+  }
+  /**
+   * @dev Throws if called by any account other than the owner.
+   */
+  modifier onlyOwner() {
+    require(msg.sender == owner);
+    _;
+  }
+  /**
+   * @dev Allows the current owner to transfer control of the contract to a newOwner.
+   * @param newOwner The address to transfer ownership to.
+   */
+  function transferOwnership(address newOwner) public onlyOwner {
+    require(newOwner != address(0));
+    OwnershipTransferred(owner, newOwner);
+    owner = newOwner;
+  }}
+```
+- safemath合约
+>>该合约规定了安全的数字运算范围。
+- coinware
+>>该合约规定了用户存入和取出（放弃兑换时）自己拥有的数字资产的方式。
+```
+function _createNewCount(string _coinName,address _addr, uint _value)internal{
+        ownerAccount[_addr] = Account(_addr);
+        ownerAccount[_addr].balance[_coinName] = _value;
+        emit NewAccount(_addr);
+    }
+            function sendToCoinWare(string _coinName, uint _value)public{
+        if(tag[msg.sender]==false){
+            
+            _createNewCount(_coinName,msg.sender,_value);
+            tag[msg.sender] = true;
+        }else{
+            ownerAccount[msg.sender].balance[_coinName] = ownerAccount[msg.sender].balance[_coinName].add(_value);
+        }
+        _coinBase[_coinName] = _coinBase[_coinName].add(_value);
+        emit balanceUp(msg.sender,_coinName, _value);
+    }
+    
+    function withdraw(string _coinName,uint _value)payable public accountCreated(msg.sender) onlyAccountOwner(msg.sender)returns(uint){
+        require(ownerAccount[msg.sender].balance[_coinName]>=_value);
+        ownerAccount[msg.sender].balance[_coinName] = ownerAccount[msg.sender].balance[_coinName].sub(_value);
+        _coinBase[_coinName] = _coinBase[_coinName].sub(_value);
+        emit balanceDown(msg.sender,_coinName,_value);
+        return _coinBase[_coinName];   
+    }
+```

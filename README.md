@@ -22,3 +22,29 @@ CoinPay主要通过利用自有链的储备库、外接币池两种方式实现�
 - 功能3（赌博兑换）页面
 
 >>在这个页面中，用户需要输入自己的姓名以及用于兑换的币种和数量，平台返回用户在此次支付中得到的资产值。
+```
+import  Nervos from './node_modules/@nervos/chain';
+    const nervos =Nervos('http://localhost:1337');
+    var sendTo= 0xcB700EE03b47d5fCb389D39B6a76cBC3E1C5ac0f;
+const abi=Json.parse([
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_coinName",
+                    "type": "string"
+                },  //只截取了一部分
+const contract=new nervos.appchain.Contract(abi,contractAddress)
+    var e1=document.getElementById('have1').value;
+    var e2=document.getElementById('number').value;
+    
+    //const simpleStoreContract = new nervos.appchain.Contract(abi, contractAddress);
+    function pay_action() {
+contract.methods.gambling(e1,e2).call()
+        contract.event.balanceUp()
+            .on("data",function(event){
+                let data = event.returnValue;
+                console.log("success",data._coinName,data._coinValue)
+            }).on('error',console.error)
+nervos.listeners.listenToTransactionReceipt().then(console.log)
+    }

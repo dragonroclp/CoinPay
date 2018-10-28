@@ -14,7 +14,7 @@ CoinPay主要通过利用自有链的储备库、外接币池两种方式实现�
 ##### 在本组设计的去中心化闪兑交易平台上，类的实体包括用户、平台、储存库以及储备贡献者。示意图如下：
 <img align=center width="600" height="300" src='https://github.com/dragonroclp/CoinPay/blob/master/class%20diagram.jpg'/>
 
-### 代码实现
+### 代码实现（核心代码）
 #### 网页客户端
 - 功能1及功能2（币种直接兑换）页面
 

@@ -210,3 +210,5 @@ contract yamiedie is CoinWare{
     }    
 }
 ```
+- interfaces合约
+>>该合约实现了与其他已有合约的连接，使得在进行兑换时，可以实现连接币池和赌博方式随机返回资产这两种兑换方式。
